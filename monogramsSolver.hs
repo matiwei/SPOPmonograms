@@ -12,6 +12,9 @@ solveLine  (size, xs)
 insertIntoSimple :: (Int, [[Char]]) -> [[Char]]
 insertIntoSimple (_,[]) = [];
 insertIntoSimple (0,xs) = xs;
+insertIntoSimple (spaces, xs) = 
+
+insertHelper (pos, left)
 
 lineSolver [] = [];
 lineSolver (xs) = [""]++line(xs)++[""]
@@ -24,7 +27,12 @@ line (x:y:xs) = line [x] ++ colorEqInsert2((snd x),(snd y)) ++ line (y:xs);
 
 colorEqInsert2 (a,b) = if (a==b) then [" "] else [""]
 
---generates strings with length of first arg from char form second
+--generates strings with length of first arg from char from second
 lineHelper :: (Integer,Char) -> [Char]
 lineHelper (0,_) = ""
 lineHelper (count,letter) = letter : lineHelper(count-1, letter)
+
+lineLengthSum [] = 0;
+lineLengthSum [x] = fst(x);
+lineLengthSum (x:y:xs) = fst(x) + colorEq(snd(x),snd(y)) + lineLengthSum(y:xs);
+colorEq (a,b) = if (a==b) then 1 else 0
