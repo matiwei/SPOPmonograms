@@ -12,9 +12,8 @@ solveLine  (size, xs)
 insertIntoSimple :: (Int, [[Char]]) -> [[Char]]
 insertIntoSimple (_,[]) = [];
 insertIntoSimple (0,xs) = xs;
-insertIntoSimple (spaces, xs) = 
+--insertIntoSimple (spaces, xs) = 
 
-insertHelper (pos, left)
 
 lineSolver [] = [];
 lineSolver (xs) = [""]++line(xs)++[""]
