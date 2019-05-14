@@ -1,5 +1,6 @@
 import Data.Char
-import Debug.Observe
+
+import Data.List 
 import Debug.Trace
 
 lineTest1 = [(1,'*'),(2,'x'),(3,'x'),(2,'*')];
@@ -35,3 +36,24 @@ lineLengthSum [] = 0;
 lineLengthSum [x] = fst(x);
 lineLengthSum (x:y:xs) = fst(x) + colorEq(snd(x),snd(y)) + lineLengthSum(y:xs);
 colorEq (a,b) = if (a==b) then 1 else 0
+
+
+--creates tree with all space combinations
+data Tree a = Empty | Node a [Tree a]
+
+generateNodes :: Integer -> Integer -> [Tree [Char]]
+generateNodes 0 _ = [Empty]
+generateNodes 1 m = [Node (addSpaces m []) [Empty]]
+generateNodes n m = [Node (addSpaces k []) (generateNodes (n-1) (m-k)) | k <- [0..m]] 
+ 
+addSpaces :: Integer -> [Char] -> [Char]
+addSpaces 0 x = ""
+addSpaces m x = x ++ " " ++ addSpaces (m - 1) x    
+
+generateSpaceCombinations :: [Tree [Char]] -> [[[Char]]] -> [[[Char]]]
+generateSpaceCombinations [] [] = []
+generateSpaceCombinations [] z = z
+generateSpaceCombinations [Empty] [] = []
+generateSpaceCombinations [Empty] z = z
+generateSpaceCombinations ((Node a b):c) [] = if length c == 0 then generateSpaceCombinations b [[a]] else generateSpaceCombinations b [[a]] ++ generateSpaceCombinations c []
+generateSpaceCombinations ((Node a b):c) [z] = if length c == 0 then generateSpaceCombinations b [(z ++ [a])] else generateSpaceCombinations b [(z ++ [a])] ++ generateSpaceCombinations c [z]
